@@ -5,17 +5,21 @@
 ```yaml
 - uses: nebularg/actions-luacheck@v1
   with:
-    # A list of files, rockspecs, or directories to be checked.
-    # Filenames will display relative to the workspace directory.
-    # Default: ${{ github.workspace }}
+    # A list of files, rockspecs, or directories to be checked. Paths can be
+    # absolute or relative to the `path` option.
     files: ''
+
+    # The working directory for luacheck. The file list should be relative to
+    # this path and output filenames be displayed relative to this path.
+    # Default: ${{ github.workspace }}
+    path: ''
 
     # Additional command-line arguments.
     # See https://luacheck.readthedocs.io/en/stable/cli.html
     args: ''
 
-    # URL to a custom configuration (`.luacheckrc`) file that will be
-    # used as the default configuration file.
+    # URL to a custom configuration (`.luacheckrc`) file that will be used as
+    # the default configuration file.
     config: ''
 ```
 

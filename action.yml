@@ -5,14 +5,29 @@ inputs:
     description: >
       A list of files, rockspecs, or directories to be checked.
 
-      Defaults to the workspace path used by actions/checkout.
+      Defaults to the workspace path as set by the `path` input.
+    required: false
+    default: '.'
+  path:
+    description: >
+      The working directory for luacheck.
+
+      The file list should be relative to this path and output
+      filenames be displayed relative to this path.
+
+      Defaults to the workspace path.
     required: false
     default: ${{ github.workspace }}
   args:
-    description: Additional command-line arguments.
+    description: >
+      Additional command-line arguments.
+
+      See https://luacheck.readthedocs.io/en/stable/cli.html
     required: false
   config:
-    description: URL to a custom configuration (`.luacheckrc`) file.
+    description: >
+      URL to a custom configuration (`.luacheckrc`) file that will be
+      used as the default configuration file.
     required: false
 runs:
   using: composite
@@ -43,4 +58,5 @@ runs:
       shell: bash
     - name: Run luacheck
       run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
+      working-directory: ${{ inputs.path }}
       shell: bash
