@@ -17,8 +17,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install dependencies
+    - name: Install luacheck
       run: |
+        hash luacheck &>/dev/null && exit 0
         echo "##[group]Install luacheck"
         echo "##[command]apt-get install -yq luarocks"
         sudo apt-get install -yq luarocks
