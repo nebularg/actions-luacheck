@@ -22,8 +22,10 @@ runs:
         echo "##[group]Install luacheck"
         echo "##[command]apt-get install -yq luarocks"
         sudo apt-get install -yq luarocks
-        echo "##[command]luarocks install luacheck lanes"
-        sudo luarocks install luacheck lanes
+        echo "##[command]luarocks install luacheck"
+        sudo luarocks install luacheck
+        echo "##[command]luarocks install lanes"
+        sudo luarocks install lanes
         echo "##[endgroup]"
       shell: bash
     - name: Install .luacheckrc
