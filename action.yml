@@ -32,8 +32,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install luacheck
-      run: |
+    - run: |
         echo "##[group]Install luacheck"
         if ! hash luacheck &>/dev/null; then
           sudo apt-get install -yq luarocks 1>/dev/null || exit 1
@@ -44,16 +43,14 @@ runs:
         luacheck --version
         echo "##[endgroup]"
       shell: bash
-    - name: Install .luacheckrc
-      run: |
+    - run: |
         [ -z "${{ inputs.config }}" ] && exit 0
-        echo "##[group]Install .luacheckrc"
         mkdir -p ~/.config/luacheck
-        echo "##[command]curl -fsSL ${{ inputs.config }}"
-        curl -fsSL ${{ inputs.config }} > ~/.config/luacheck/.luacheckrc
-        echo "##[endgroup]"
+        curl -fsSL "${{ inputs.config }}" -o ~/.config/luacheck/.luacheckrc || {
+          echo "Unable to download \"${{ inputs.config }}\"" >&2
+          exit 1
+        }
       shell: bash
-    - name: Run luacheck
-      run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
+    - run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
       working-directory: ${{ inputs.path }}
       shell: bash
