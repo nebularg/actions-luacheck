@@ -42,5 +42,5 @@ runs:
         echo "##[endgroup]"
       shell: bash
     - name: Run luacheck
-      run: luacheck ${{ inputs.files }} ${{ inputs.args }}
+      run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
       shell: bash
