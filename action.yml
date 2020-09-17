@@ -28,7 +28,7 @@ runs:
       shell: bash
     - name: Install .luacheckrc
       run: |
-        [ -z "${{ inputs luacheckrc }}" ] && exit 0
+        [ -z "${{ inputs.luacheckrc }}" ] && exit 0
         echo "##[group]Install .luacheckrc"
         mkdir -p ~/.config/luacheck
         echo "##[command]curl -fsSL ${{ inputs.luacheckrc }}"
