@@ -1,7 +1,7 @@
 name: luacheck
 description: Runs luacheck.
 inputs:
-  path:
+  files:
     description: >
       A list of files, rockspecs, or directories to be checked.
 
@@ -11,7 +11,7 @@ inputs:
   args:
     description: Additional command-line arguments.
     required: false
-  luacheckrc:
+  config:
     description: URL to a custom configuration (`.luacheckrc`) file.
     required: false
 runs:
@@ -37,10 +37,10 @@ runs:
         [ -z "${{ inputs.luacheckrc }}" ] && exit 0
         echo "##[group]Install .luacheckrc"
         mkdir -p ~/.config/luacheck
-        echo "##[command]curl -fsSL ${{ inputs.luacheckrc }}"
-        curl -fsSL ${{ inputs.luacheckrc }} > ~/.config/luacheck/.luacheckrc
+        echo "##[command]curl -fsSL ${{ inputs.config }}"
+        curl -fsSL ${{ inputs.config }} > ~/.config/luacheck/.luacheckrc
         echo "##[endgroup]"
       shell: bash
     - name: Run luacheck
-      run: luacheck ${{ inputs.path }} ${{ inputs.args }}
+      run: luacheck ${{ inputs.files }} ${{ inputs.args }}
       shell: bash
