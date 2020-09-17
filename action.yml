@@ -1,0 +1,43 @@
+name: luacheck
+description: Runs luacheck.
+inputs:
+  path:
+    description: >
+      A list of files, rockspecs, or directories to be checked.
+
+      Defaults to the workspace path used by actions/checkout.
+    required: false
+    default: ${{ github.workspace }}
+  args:
+    description: Additional command-line arguments.
+    required: false
+  luacheckrc:
+    description: URL to a custom configuration (`.luacheckrc`) file.
+    required: false
+runs:
+  using: composite
+  steps:
+    - id: Install dependencies
+      run: |
+        echo "##[group]Install luacheck"
+        echo "##[command]apt-get install -yq luarocks"
+        sudo apt-get install -yq luarocks
+        echo "##[command]luarocks install luacheck lanes"
+        sudo luarocks install luacheck lanes
+        echo "##[endgroup]"
+      shell: bash
+    - id: Install .luacheckrc
+      run: |
+        [ -z "${{ inputs luacheckrc }}" ] && exit 0
+        echo "##[group]Install .luacheckrc"
+        mkdir -p ~/.config/luacheck
+        echo "##[command]curl -fsSL ${{ inputs.luacheckrc }}"
+        curl -fsSL ${{ inputs.luacheckrc }} > ~/.config/luacheck/.luacheckrc || {
+          echo "##[error]Unable to download .luacheckrc from \"${{ inputs.luacheckrc }}\""
+          exit 1
+        }
+        echo "##[endgroup]"
+      shell: bash
+    - id: Run luacheck
+      run: luacheck ${{ inputs.path }} ${{ inputs.args }}
+      shell: bash
