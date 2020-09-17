@@ -27,6 +27,8 @@ runs:
         sudo luarocks install luacheck
         echo "##[command]luarocks install lanes"
         sudo luarocks install lanes
+        echo "##[command]luacheck --version"
+        luacheck --version
         echo "##[endgroup]"
       shell: bash
     - name: Install .luacheckrc
