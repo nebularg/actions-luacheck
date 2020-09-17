@@ -15,7 +15,7 @@
     args: ''
 
     # URL to a custom configuration (`.luacheckrc`) file that will be
-    # used as the default config.
+    # used as the default configuration file.
     config: ''
 ```
 
