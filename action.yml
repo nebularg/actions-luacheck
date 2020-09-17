@@ -36,12 +36,9 @@ runs:
       run: |
         echo "##[group]Install luacheck"
         if ! hash luacheck &>/dev/null; then
-          echo "##[command]apt-get install -yq luarocks"
-          sudo apt-get install -yq luarocks
-          echo "##[command]luarocks install luacheck"
-          sudo luarocks install luacheck
-          echo "##[command]luarocks install lanes"
-          sudo luarocks install lanes
+          sudo apt-get install -yq luarocks 1>/dev/null || exit 1
+          sudo luarocks install luacheck 1>/dev/null || exit 1
+          sudo luarocks install lanes &>/dev/null || true
         fi
         echo "##[command]luacheck --version"
         luacheck --version
