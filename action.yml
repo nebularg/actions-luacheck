@@ -38,10 +38,7 @@ runs:
         echo "##[group]Install .luacheckrc"
         mkdir -p ~/.config/luacheck
         echo "##[command]curl -fsSL ${{ inputs.luacheckrc }}"
-        curl -fsSL ${{ inputs.luacheckrc }} > ~/.config/luacheck/.luacheckrc || {
-          echo "Unable to download .luacheckrc from \"${{ inputs.luacheckrc }}\""
-          exit 1
-        }
+        curl -fsSL ${{ inputs.luacheckrc }} > ~/.config/luacheck/.luacheckrc
         echo "##[endgroup]"
       shell: bash
     - name: Run luacheck
