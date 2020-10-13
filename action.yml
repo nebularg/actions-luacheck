@@ -1,5 +1,8 @@
 name: luacheck
 description: Runs luacheck.
+branding:
+  icon: check-square
+  color: yellow
 inputs:
   files:
     description: >
