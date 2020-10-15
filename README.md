@@ -21,6 +21,14 @@
     # URL to a custom configuration (`.luacheckrc`) file that will be used as
     # the default configuration file.
     config: ''
+
+    # Emits annotations for source code at locations parsed from the output.
+    # Must be set to "none", "warning" or "error".
+    #
+    # Requires that output of warnings not be suppressed through the -qq or -qqq arguments.
+    #
+    # Default: 'none'
+    annotate: 'none'
 ```
 
 ## Examples
