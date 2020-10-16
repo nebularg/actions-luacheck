@@ -29,6 +29,14 @@ inputs:
       URL to a custom configuration (`.luacheckrc`) file that will be
       used as the default configuration file.
     required: false
+  annotate:
+    description: >
+      Emits annotations for source code at locations parsed from the output.
+      Must be set to "none", "warning" or "error".
+
+      Requires that output of warnings not be suppressed through the -qq or -qqq arguments.
+    required: false
+    default: none
 runs:
   using: composite
   steps:
@@ -51,6 +59,28 @@ runs:
           exit 1
         }
       shell: bash
-    - run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
+    - run: |
+        annotate() {
+          case "${{ inputs.annotate }}" in
+            warning|error)
+              # Search for "<path>:<line>:<col>: <message>" lines in the output,
+              # trim whitespace, and reformat them to workflow commands.
+              awk -F':' -v level="${{ inputs.annotate }}" '
+                { print $0 }
+
+                /^\s+.+?:[0-9]+:[0-9]+:/ {
+                  gsub(/^\s+|\s+$/, "")
+                  gsub(/^\s+/, "", $4)
+
+                  printf "::%s file=%s,line=%s,col=%s::%s\n", level, $1, $2, $3, $4
+                }'
+                ;;
+            *)
+              cat
+              ;;
+          esac
+        }
+
+        luacheck ${{ inputs.args }} -- ${{ inputs.files }} | annotate
       working-directory: ${{ inputs.path }}
       shell: bash
