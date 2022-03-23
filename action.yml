@@ -1,4 +1,4 @@
-name: luacheck
+name: luacheck-runner
 description: Runs luacheck.
 branding:
   icon: check-square
