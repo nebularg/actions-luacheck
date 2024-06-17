@@ -4,7 +4,7 @@
             "owner": "luacheck",
             "pattern": [
                 {
-                    "regexp": "^Checking (.+?)\\s*\\d+ (warning|error)s?\\n$",
+                    "regexp": "^Checking (.+?)\\s+\\d+ (warning|error).*\\n$",
                     "file": 1,
                     "severity": 2
                 },
