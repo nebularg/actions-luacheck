@@ -1,0 +1,22 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "luacheck",
+            "pattern": [
+                {
+                    "regexp": "^Checking (.+?)\\s+\\d+ (warning|error).*\\n$",
+                    "file": 1,
+                    "severity": 2
+                },
+                {
+                    "regexp": "^\\s+(.+?):(\\d+):(\\d+)\\-?\\d*:\\s*(.+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4,
+                    "loop": true
+                }
+            ]
+        }
+    ]
+}
