@@ -37,12 +37,11 @@ inputs:
     description: >
       Emit annotations for source code at locations parsed from the output.
 
-      Requires showing warning codes (--codes) and that the output of warnings
-      not be suppressed through the -qq or -qqq arguments.
+      Requires that output of warnings not be suppressed through the -qq or -qqq arguments.
 
       Defaults to true.
     required: false
-    default: true
+    default: 'true'
 runs:
   using: composite
   steps:

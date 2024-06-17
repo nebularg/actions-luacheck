@@ -1,30 +1,20 @@
 {
     "problemMatcher": [
         {
-            "owner": "luacheck-error",
-            "severity": "error",
+            "owner": "luacheck",
             "pattern": [
                 {
-                    "regexp": "^\\s+(.+?):(\\d+):(\\d+)\\-?\\d*: \\(E(\\d+)\\) (.+)$",
+                    "regexp": "^Checking (.+?)\\s*\\d+ (warning|error)s?\\n$",
+                    "file": 1,
+                    "severity": 2
+                },
+                {
+                    "regexp": "^\\s+(.+?):(\\d+):(\\d+)\\-?\\d*:\\s*(.+)$",
                     "file": 1,
                     "line": 2,
                     "column": 3,
-                    "message": 6,
-                    "code": 5
-                }
-            ]
-        },
-        {
-            "owner": "luacheck-warning",
-            "severity": "warning",
-            "pattern": [
-                {
-                    "regexp": "^\\s+(.+?):(\\d+):(\\d+)\\-?\\d*: \\(W(\\d+)\\) (.+)$",
-                    "file": 1,
-                    "line": 2,
-                    "column": 3,
-                    "message": 6,
-                    "code": 5
+                    "message": 4,
+                    "loop": true
                 }
             ]
         }
