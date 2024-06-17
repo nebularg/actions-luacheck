@@ -49,7 +49,6 @@ runs:
           sudo apt-get update 1>/dev/null || exit 1
           sudo apt-get install -yq luarocks 1>/dev/null || exit 1
           sudo luarocks install luacheck 1.1.1-1 1>/dev/null || exit 1
-          sudo luarocks install lanes 3.16.0-0 &>/dev/null || true
         fi
         echo "##[command]luacheck --version"
         luacheck --version
