@@ -32,6 +32,7 @@ inputs:
       URL to a custom configuration (`.luacheckrc`) file that will be
       used as the default configuration file.
     required: false
+    default: ''
   annotate:
     description: >
       Emit annotations for source code at locations parsed from the output.
@@ -45,27 +46,32 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: |
-        echo "##[group]Install luacheck"
+    - name: Install luacheck
+      run: |
         if ! hash luacheck &>/dev/null; then
           sudo apt-get update 1>/dev/null || exit 1
           sudo apt-get install -yq luarocks 1>/dev/null || exit 1
           sudo luarocks install luacheck 1.2.0-1 1>/dev/null || exit 1
         fi
-        echo "##[command]luacheck --version"
+        echo "[command]luacheck --version"
         luacheck --version
-        echo "##[endgroup]"
       shell: bash
-    - run: |
-        [ -z "${{ inputs.config }}" ] && exit 0
+
+    - if: ${{ inputs.config != '' }}
+      name: Download luacheck config
+      run: |
         mkdir -p ~/.config/luacheck
         curl -fsSL "${{ inputs.config }}" -o ~/.config/luacheck/.luacheckrc || {
           echo "Unable to download \"${{ inputs.config }}\"" >&2
           exit 1
         }
       shell: bash
-    - run: |
-        [[ "${{ inputs.annotate }}" == "true" ]] && echo "::add-matcher::luacheck-problem-matcher.json"
-        luacheck ${{ inputs.args }} -- ${{ inputs.files }}
+
+    - if: ${{ inputs.annotate == 'true' }}
+      name: Enable annotations
+      run: echo "::add-matcher::luacheck-problem-matcher.json"
+      shell: bash
+
+    - run: luacheck ${{ inputs.args }} -- ${{ inputs.files }}
       working-directory: ${{ inputs.path }}
       shell: bash
