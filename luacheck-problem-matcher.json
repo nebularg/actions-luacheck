@@ -1,0 +1,32 @@
+{
+    "problemMatcher": [
+        {
+            "owner": "luacheck-error",
+            "severity": "error",
+            "pattern": [
+                {
+                    "regexp": "^\\s+(.+?):(\\d+):(\\d+): \\(E(\\d+)\\) (.+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 6,
+                    "code": 5
+                }
+            ]
+        },
+        {
+            "owner": "luacheck-warning",
+            "severity": "warning",
+            "pattern": [
+                {
+                    "regexp": "^\\s+(.+?):(\\d+):(\\d+): \\(W(\\d+)\\) (.+)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 6,
+                    "code": 5
+                }
+            ]
+        }
+    ]
+}
